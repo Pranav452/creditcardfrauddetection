@@ -1,12 +1,35 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import xgboost as xgb
-from sklearn.preprocessing import StandardScaler
+
+try:
+    import xgboost as xgb
+    st.success("XGBoost imported successfully!")
+except ImportError as e:
+    st.error(f"Failed to import XGBoost: {e}")
+    st.info("Please make sure XGBoost is installed correctly.")
+
+try:
+    from sklearn.preprocessing import StandardScaler
+    st.success("StandardScaler imported successfully!")
+except ImportError as e:
+    st.error(f"Failed to import StandardScaler: {e}")
+    st.info("Please make sure scikit-learn is installed correctly.")
+
+# Display Python and package versions
+import sys
+st.write(f"Python version: {sys.version}")
+st.write(f"NumPy version: {np.__version__}")
+st.write(f"Pandas version: {pd.__version__}")
 
 # Load the trained model
-model = xgb.Booster()
-model.load_model('xgboost_model.json')
+try:
+    model = xgb.Booster()
+    model.load_model('xgboost_model.json')
+    st.success("Model loaded successfully!")
+except Exception as e:
+    st.error(f"Failed to load the model: {e}")
+    st.info("Please make sure the model file 'xgboost_model.json' is present in the correct location.")
 
 # Define the feature names (the ones used during training)
 feature_names = ['Time', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 
