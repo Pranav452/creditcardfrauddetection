@@ -27,7 +27,12 @@ st.write(f"Pandas version: {pd.__version__}")
 
 # Load the trained model
 model = None
-model_path = 'xgboost_model.json'
+script_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(script_dir, 'xgboost_model.json')
+
+print("Current working directory:", os.getcwd())
+print("Attempting to load model from:", os.path.abspath(model_path))
+
 if os.path.exists(model_path):
     try:
         model = xgb.Booster()
